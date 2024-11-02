@@ -1,40 +1,33 @@
-# Template website undangan pernikahan sederhana
+# Wedding Landing Page - Daeng Sherly Menikah
 
-![Thumbnail](/assets/images/banner.png)
-![Thumbnail2](/assets/images/banner2.png)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cef32dbf-f26f-4865-84a9-b85a439c9994/deploy-status)](https://app.netlify.com/sites/ulems/deploys)
-[![Hits](https://ikit.my.id/0b3y8q)](https://cie.my.id)
-[![GitHub repo size](https://img.shields.io/github/repo-size/dewanakl/undangan?color=brightgreen)](https://shields.io)
-[![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
-
-## Demo
-
-[https://ulems.my.id?to=Teman+teman+semua](https://ulems.my.id?to=Teman+teman+semua)
+![Thumbnail](/image/thumbnail-web-sherly-daeng-menikah.png)
 
 
-## Deployment API
+# Section/Feature
+- Main Info
+- Countdown to D-Day
+- Time and Place Info
+- Add to Calendar Button (Google Calendar)
+- Map Direction Button (Google Map)
+- Send Message Button (Whatssapp API)
 
-- Presentation
-    [https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
+# Stack
+- Netlify (https://netlify.com)
 
-## Tech stack
+     [![Netlify Status](https://api.netlify.com/api/v1/badges/2b185197-f76c-46e4-a0ab-0fe5c2ff8dc1/deploy-status)](https://app.netlify.com/sites/sherly-daeng-menikah/deploys)
 
-- Bootstrap 5.3.3
-- AOS 2.3.4
-- Fontawsome 6.5.1
-- Normalize 8.0.1
-- Canvas Confetti 1.9.2
-- Google Fonts
-- Vanilla JS
+- Bulma CSS (https://bulma.io)
 
-## Contributing
+# Info
+- Live version check at: https://sherly.dae.ng/
+- Or check demo at: https://sherly-daeng-menikah.netlify.app/
+- Check my web at: https://daengdoang.com :)
 
-I'm very open to those of you who want to contribute to the undangan!
+# Fonts
+- Rouge Script (Google Font)
+- Raleway (Google Font)
 
-## Security Vulnerabilities
 
-If you find any security vulnerabilities in this undangan, please email DKL via [dewanakretarta29@gmail.com](mailto:dewanakretarta29@gmail.com).
+# Credits
 
-## License
-
-Undangan is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Floral vector created by BiZkettE1 - www.freepik.com (https://www.freepik.com/free-photos-vectors/background)
