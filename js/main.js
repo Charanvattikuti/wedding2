@@ -1,237 +1,63 @@
-;(function () {
-	
-	'use strict';
-
-	var mobileMenuOutsideClick = function() {
-
-		$(document).click(function (e) {
-	    var container = $("#fh5co-offcanvas, .js-fh5co-nav-toggle");
-	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-
-	    	if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-fh5co-nav-toggle').removeClass('active');
-	    	}
-	    }
-		});
-
-	};
 
 
-	var offcanvasMenu = function() {
+/*==================== SHOW SCROLL UP ====================*/
+function scrollUp() {
+    const scrollUp = document.getElementById('floating');
+    // When the scroll is higher than 560 viewport height, add the show-scroll class to the a tag with the scroll-top class
+    if (this.scrollY >= 560) scrollUp.classList.add('show-scroll'); 
+    else scrollUp.classList.remove('show-scroll');
+    document.getElementById('floating-toggle').classList.remove("active");
+}
+window.addEventListener('scroll', scrollUp)
 
-		$('#page').prepend('<div id="fh5co-offcanvas" />');
-		//$('#page').prepend('<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle fh5co-nav-white"><i></i></a>');
-		var clone1 = $('.menu-1 > ul').clone();
-		$('#fh5co-offcanvas').append(clone1);
-		var clone2 = $('.menu-2 > ul').clone();
-		$('#fh5co-offcanvas').append(clone2);
+/*=============== SHOW & HIDE MENU ===============*/
+const toggleButton = document.getElementById('floating-toggle')
 
-		$('#fh5co-offcanvas .has-dropdown').addClass('offcanvas-has-dropdown');
-		$('#fh5co-offcanvas')
-			.find('li')
-			.removeClass('has-dropdown');
-
-		// Hover dropdown menu on mobile
-		$('.offcanvas-has-dropdown').mouseenter(function(){
-			var $this = $(this);
-
-			$this
-				.addClass('active')
-				.find('ul')
-				.slideDown(500, 'easeOutExpo');				
-		}).mouseleave(function(){
-
-			var $this = $(this);
-			$this
-				.removeClass('active')
-				.find('ul')
-				.slideUp(500, 'easeOutExpo');				
-		});
+const activeMenu = () => {
+    toggleButton.classList.toggle('active')
+}
 
 
-		$(window).resize(function(){
-
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-fh5co-nav-toggle').removeClass('active');
-				
-	    	}
-		});
-	};
-
-
-	var burgerMenu = function() {
-
-		$('body').on('click', '.js-fh5co-nav-toggle', function(event){
-			var $this = $(this);
-
-
-			if ( $('body').hasClass('overflow offcanvas') ) {
-				$('body').removeClass('overflow offcanvas');
-			} else {
-				$('body').addClass('overflow offcanvas');
-			}
-			$this.toggleClass('active');
-			event.preventDefault();
-
-		});
-	};
+toggleButton.addEventListener('click', activeMenu)
 
 
 
-	var contentWayPoint = function() {
-		var i = 0;
-		$('.animate-box').waypoint( function( direction ) {
-
-			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
-				
-				i++;
-
-				$(this.element).addClass('item-animate');
-				setTimeout(function(){
-
-					$('body .animate-box.item-animate').each(function(k){
-						var el = $(this);
-						setTimeout( function () {
-							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
-								el.addClass('fadeIn animated-fast');
-							} else if ( effect === 'fadeInLeft') {
-								el.addClass('fadeInLeft animated-fast');
-							} else if ( effect === 'fadeInRight') {
-								el.addClass('fadeInRight animated-fast');
-							} else {
-								el.addClass('fadeInUp animated-fast');
-							}
-
-							el.removeClass('item-animate');
-						},  k * 200, 'easeInOutExpo' );
-					});
-					
-				}, 100);
-				
-			}
-
-		} , { offset: '85%' } );
-	};
-
-
-	var dropdown = function() {
-
-		$('.has-dropdown').mouseenter(function(){
-
-			var $this = $(this);
-			$this
-				.find('.dropdown')
-				.css('display', 'block')
-				.addClass('animated-fast fadeInUpMenu');
-
-		}).mouseleave(function(){
-			var $this = $(this);
-
-			$this
-				.find('.dropdown')
-				.css('display', 'none')
-				.removeClass('animated-fast fadeInUpMenu');
-		});
-
-	};
+// Function to fetch sunrise and sunset times using the Sunrise Sunset API
+async function getSunriseSunset() {
+    try {
+      const response = await fetch('https://api.sunrise-sunset.org/json?lat=20.5937&lng=78.9629&formatted=0');
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.error('Error fetching sunrise and sunset data:', error);
+      return null;
+    }
+  }
+  
+  // Function to determine if it's currently day or night based on sunrise and sunset times
+  function isDaytime(sunrise, sunset) {
+    const now = new Date();
+    return now >= new Date(sunrise) && now <= new Date(sunset);
+  }
+  
+  // Function to update the body class based on the time of day
+  function updateBodyClass() {
+    getSunriseSunset().then(results => {
+      if (results) {
+        const { sunrise, sunset } = results;
+        const isDay = isDaytime(sunrise, sunset);
+        document.body.classList.toggle('dark-mode', isDay);
+        document.body.classList.toggle('light-mode', !isDay);
+      }
+    });
+  }
+  
+  // Call the updateBodyClass function to set the initial body class
+  updateBodyClass();
+  
+  // Set up an interval to update the body class every minute (in milliseconds)
+  setInterval(updateBodyClass, 60 * 1000);
+  
 
 
-	var testimonialCarousel = function(){
-		var owl = $('.owl-carousel-fullwidth');
-		owl.owlCarousel({
-			items: 1,
-			loop: true,
-			margin: 0,
-			responsiveClass: true,
-			nav: false,
-			dots: true,
-			smartSpeed: 800,
-			autoHeight: true,
-		});
-	};
 
-
-	var goToTop = function() {
-
-		$('.js-gotop').on('click', function(event){
-			
-			event.preventDefault();
-
-			$('html, body').animate({
-				scrollTop: $('html').offset().top
-			}, 500, 'easeInOutExpo');
-			
-			return false;
-		});
-
-		$(window).scroll(function(){
-
-			var $win = $(window);
-			if (!isMobileDevice()){
-				if ($win.scrollTop() > 200) {
-					$('.js-top').addClass('active');
-				} else {
-					$('.js-top').removeClass('active');
-				}
-			}
-		});
-	
-	};
-
-	function isMobileDevice(){
-		return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-	}
-
-
-	// Loading page
-	var loaderPage = function() {
-		$(".fh5co-loader").fadeOut("slow");
-	};
-
-	var counter = function() {
-		$('.js-counter').countTo({
-			 formatter: function (value, options) {
-	      return value.toFixed(options.decimals);
-	    },
-		});
-	};
-
-	var counterWayPoint = function() {
-		if ($('#fh5co-counter').length > 0 ) {
-			$('#fh5co-counter').waypoint( function( direction ) {
-										
-				if( direction === 'down' && !$(this.element).hasClass('animated') ) {
-					setTimeout( counter , 400);					
-					$(this.element).addClass('animated');
-				}
-			} , { offset: '90%' } );
-		}
-	};
-
-	// Parallax
-	var parallax = function() {
-		$(window).stellar();
-	};
-
-	
-	$(function(){
-		mobileMenuOutsideClick();
-		parallax();
-		offcanvasMenu();
-		burgerMenu();
-		contentWayPoint();
-		dropdown();
-		testimonialCarousel();
-		goToTop();
-		loaderPage();
-		counter();
-		counterWayPoint();
-	});
-
-
-}());
